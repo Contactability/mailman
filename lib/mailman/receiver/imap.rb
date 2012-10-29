@@ -22,7 +22,7 @@ module Mailman
         @server    = options[:server]
         @username  = options[:username]
         @password  = options[:password]
-        @filter    = options[:filter] || ["NOT", "Answered"]
+        @filter    = options[:filter] || ["NOT", "ANSWERED"]
         @port      = options[:port] || 143
         @ssl       = options[:ssl] || false
         @folder    = options[:folder] || "INBOX"

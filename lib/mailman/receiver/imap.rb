@@ -49,10 +49,10 @@ module Mailman
         @connection.search(@filter).each do  |message|
           body = @connection.fetch(message,"RFC822")[0].attr["RFC822"]
           @processor.process(body)
-          @connection.store(message,"+FLAGS",[Net::IMAP::PROCESSED])
+          @connection.store(message,"+FLAGS",[Net::IMAP::DELETED])
         end
         # Clears messages that have the Deleted flag set
-        @connection.expunge
+        # @connection.expunge
       end
 
     end

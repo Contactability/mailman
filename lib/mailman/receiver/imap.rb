@@ -22,7 +22,7 @@ module Mailman
         @server    = options[:server]
         @username  = options[:username]
         @password  = options[:password]
-        @filter    = options[:filter] || ["NOT", "SEEN"]
+        @filter    = options[:filter] || ["NOT", "PROCESSED"]
         @port      = options[:port] || 143
         @ssl       = options[:ssl] || false
         @folder    = options[:folder] || "INBOX"
@@ -49,7 +49,7 @@ module Mailman
         @connection.search(@filter).each do  |message|
           body = @connection.fetch(message,"RFC822")[0].attr["RFC822"]
           @processor.process(body)
-          @connection.store(message,"+FLAGS",[:Seen])
+          @connection.store(message,"+FLAGS",[:Processed])
         end
         # Clears messages that have the Deleted flag set
         # @connection.expunge

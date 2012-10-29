@@ -40,7 +40,7 @@ module Mailman
         @connection.each_mail do |message|
           @processor.process(message.pop)
         end
-        @connection.delete_all
+        #@connection.delete_all
       end
 
     end

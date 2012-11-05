@@ -1,11 +1,11 @@
 # Mailman [![Build Status](https://secure.travis-ci.org/titanous/mailman.png)](https://secure.travis-ci.org/titanous/mailman)
 
-Mailman is an incoming mail processing microframework (with POP3 and Maildir
+Contactability Mailman is an incoming mail processing microframework (with POP3 and Maildir
 support), that works with Rails "out of the box".
 
 ```ruby
-require 'mailman'
-Mailman::Application.run do
+require 'contactability_mailman'
+ContactabilityMailman::Application.run do
   to 'ticket-%id%@example.org' do 
     Ticket.find(params[:id]).add_reply(message)
   end

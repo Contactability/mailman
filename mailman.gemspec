@@ -4,19 +4,19 @@ $:.unshift lib unless $:.include?(lib)
 
 # this gemspec was mostly stolen from bundler
 
-require 'mailman/version'
+require 'contactability_mailman/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'mailman'
-  s.version     = Mailman::VERSION
+  s.name        = 'contactability_mailman'
+  s.version     = ContactabilityMailman::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Jonathan Rudenberg']
   s.email       = ['jonathan@titanous.com']
   s.homepage    = 'http://mailmanrb.com'
   s.summary     = 'A incoming email processing microframework'
-  s.description = 'Mailman makes it easy to process incoming emails with a simple routing DSL'
+  s.description = 'Contactability Mailman makes it easy to process incoming emails with a simple routing DSL'
 
-  s.rubyforge_project = 'mailman'
+  s.rubyforge_project = 'contactability_mailman'
 
   s.add_dependency 'mail', '>= 2.0.3'
   s.add_dependency 'activesupport', '>= 2.3.4'

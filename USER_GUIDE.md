@@ -1,28 +1,28 @@
-# Mailman User Guide
+# Contactability Mailman User Guide
 
-Mailman is a microframework for processing incoming email.
+ContactabilityMailman is a microframework for processing incoming email.
 
-Here is an example Mailman app that takes incoming messages to a support
+Here is an example ContactabilityMailman app that takes incoming messages to a support
 email account, and adds them to a database.
 
 ```ruby
-# mailman_app.rb
-require 'mailman'
+# contactability mailman_app.rb
+require 'contactability_mailman'
 
-Mailman.config.maildir = '~/Maildir'
+ContactabilityMailman.config.maildir = '~/Maildir'
 
-Mailman::Application.run do
+ContactabilityMailman::Application.run do
   to 'support@example.org' do
     Ticket.new_from_message(message)
   end
 end
 ```
 
-The Mailman app could then be started by running `ruby mailman_app.rb`.
+The ContactabilityMailman app could then be started by running `ruby contactability_mailman_app.rb`.
 
 ## Installation
 
-Installation is as simple as `gem install mailman`.
+Installation is as simple as `gem install contactability_mailman`.
 
 
 ## Routes & Conditions
@@ -52,7 +52,7 @@ details).
 The capture names may only contain letters and underscores. Behind the scenes
 they are compiled to regular expressions, and each capture is the equivalent to
 `.*`. There is currently no way to escape `%` characters. If a literal `%` is
-required, and Mailman thinks it is a named capture, use a regular expression
+required, and ContactabilityMailman thinks it is a named capture, use a regular expression
 matcher instead.
 
 #### Regular expression
@@ -63,10 +63,10 @@ the params helper (`params[:captures]`) as an Array, and as block arguments.
 
 ### Routes
 
-Routes are defined within a Mailman application block:
+Routes are defined within a ContactabilityMailman application block:
 
 ```ruby
-Mailman::Application.run do
+ContactabilityMailman::Application.run do
   # routes here
 end
 ```
@@ -153,12 +153,12 @@ the properties available.
 
 Currently there are five conditions available: `to`, `from`, `cc`, `subject`, `body`
 
-More can be added easily (see `lib/mailman/route/conditions.rb`).
+More can be added easily (see `lib/contactability_mailman/route/conditions.rb`).
 
 
 ## Receivers
 
-There are currently three types of receivers in Mailman: Standard Input,
+There are currently three types of receivers in ContactabilityMailman: Standard Input,
 Maildir, and POP3. If IMAP or any complex setups are required, use a mail
 retriever like [getmail](http://pyropus.ca/software/getmail/) with the
 Maildir receiver.
@@ -171,7 +171,7 @@ configured receivers. The app will process the message, and then quit. This
 receiver is useful for testing and debugging. This feature can be disabled
 with the `Mailman.config.ignore_stdin` option.
 
-**Example**: `cat plain_message.eml | ruby mailman_app.rb`
+**Example**: `cat plain_message.eml | ruby contactability_mailman_app.rb`
 
 
 ### POP3

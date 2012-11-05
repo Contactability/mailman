@@ -1,13 +1,13 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '/spec_helper'))
 
-describe Mailman::Application do
+describe ContactabilityMailman::Application do
 
   before do
     config.watch_maildir = false
   end
 
   after do
-    Mailman.reset_config!
+    ContactabilityMailman.reset_config!
     listener = @app.instance_variable_get('@listener')
     listener.stop unless listener.nil?
   end
@@ -17,7 +17,7 @@ describe Mailman::Application do
   end
 
   it 'should route a message based on the from address' do
-    mailman_app {
+    contactability_mailman_app {
       from '%user%@machine.example'  do
         params[:user].should == 'jdoe'
         message.subject.should == 'Saying Hello'
@@ -28,7 +28,7 @@ describe Mailman::Application do
   end
 
   it 'should route a message based on the from and to addresses' do
-    mailman_app {
+    contactability_mailman_app {
       from('jdoe@machine.example').to(/(.+)@(.+)/) do |to_user, to_domain|
         params[:captures].first.should == 'mary'
         to_domain.should == 'example.net'
@@ -39,7 +39,7 @@ describe Mailman::Application do
   end
 
   it 'should route a message to a class instance method' do
-    mailman_app {
+    contactability_mailman_app {
       from '%user%@machine.example', FakeMailer
     }
 
@@ -47,7 +47,7 @@ describe Mailman::Application do
   end
 
   it "should route a message that doesn't match to the default block" do
-    mailman_app {
+    contactability_mailman_app {
       from('foobar@example.net') do
         false.should be_true # we're not supposed to be here
       end
@@ -61,7 +61,7 @@ describe Mailman::Application do
   end
 
   it "should accept a message from STDIN" do
-    mailman_app {
+    contactability_mailman_app {
       from('jamis@37signals.com') do
         true
       end
@@ -74,11 +74,11 @@ describe Mailman::Application do
 
   describe "(when config.ignore_stdin)" do
     before do
-      Mailman.config.ignore_stdin = true
+      ContactabilityMailman.config.ignore_stdin = true
     end
 
     it "should not accept a message from STDIN" do
-      mailman_app {
+      contactability_mailman_app {
         from('jamis@37signals.com') do
           true
         end
@@ -96,7 +96,7 @@ describe Mailman::Application do
                     :password => 'bacon' }
     config.poll_interval = 0 # just poll once
 
-    mailman_app {
+    contactability_mailman_app {
       from 'chunky@bacon.com' do
         @count ||= 0
         @count += 1
@@ -116,9 +116,9 @@ describe Mailman::Application do
     mock_pop3 = MockPOP3.new
     mock_pop3.should_receive(:start).and_raise(SystemCallError.new("Generic Connection Error"))
     Net::POP3.should_receive(:new).and_return(mock_pop3)
-    Mailman.logger.should_receive(:error).with(/unknown error - Generic Connection Error/i)
+    ContactabilityMailman.logger.should_receive(:error).with(/unknown error - Generic Connection Error/i)
 
-    mailman_app {
+    contactability_mailman_app {
       from 'chunky@bacon.com' do
         @count ||= 0
         @count += 1
@@ -134,7 +134,7 @@ describe Mailman::Application do
                     :password => 'bacon' }
     config.poll_interval = 0 # just poll once
 
-    mailman_app {
+    contactability_mailman_app {
       from 'chunky@bacon.com' do
         @count ||= 0
         @count += 1
@@ -150,7 +150,7 @@ describe Mailman::Application do
 
     config.maildir = File.join(SPEC_ROOT, 'test-maildir')
 
-    mailman_app {
+    contactability_mailman_app {
       from 'jdoe@machine.example' do
         @count ||= 0
         @count += 1
@@ -171,7 +171,7 @@ describe Mailman::Application do
     test_message_path = File.join(config.maildir, 'new', 'message2')
     test_message_path_3 = File.join(config.maildir, 'new', 'message3')
 
-    mailman_app {
+    contactability_mailman_app {
       from 'jdoe@machine.example' do
         @count ||= 0
         @count += 1
@@ -194,7 +194,7 @@ describe Mailman::Application do
   end
 
   it 'should match a multipart endocoded body' do
-    mailman_app {
+    contactability_mailman_app {
       body /ID (\d+) (OK|NO)/ do
         params[:captures].first.should == '43'
       end

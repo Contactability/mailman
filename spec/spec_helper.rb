@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'fileutils'
-require 'mailman'
+require 'contactability_mailman'
 require 'rspec'
 require 'maildir'
 
@@ -18,22 +18,22 @@ unless defined?(THREAD_TIMING)
   THREAD_TIMING = (ENV['THREAD_TIMING'] || (defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby' || RUBY_ENGINE == 'rbx') ? 2.5 : 2)).to_f
 end
 
-module Mailman::SpecHelpers
+module ContactabilityMailman::SpecHelpers
 
   def regexp_matcher(pattern)
-    Mailman::Route::RegexpMatcher.new(pattern)
+    ContactabilityMailman::Route::RegexpMatcher.new(pattern)
   end
 
   def string_matcher(pattern)
-    Mailman::Route::StringMatcher.new(pattern)
+    ContactabilityMailman::Route::StringMatcher.new(pattern)
   end
 
   def basic_message
     Mail.new("To: test@example.com\r\nFrom: chunky@bacon.com\r\nCC: testing@example.com\r\nSubject: Hello!\r\n\r\nemail message\r\n")
   end
 
-  def mailman_app(&block)
-    @app = Mailman::Application.new(&block)
+  def ContactabilityMailman_app(&block)
+    @app = ContactabilityMailman::Application.new(&block)
   end
 
   def send_message(message)
@@ -41,7 +41,7 @@ module Mailman::SpecHelpers
   end
 
   def config
-    Mailman.config
+    ContactabilityMailman.config
   end
 
   def fixture(*name)
@@ -60,12 +60,12 @@ module Mailman::SpecHelpers
 end
 
 RSpec.configure do |config|
-  config.include Mailman::SpecHelpers
+  config.include ContactabilityMailman::SpecHelpers
   config.before do
-    Mailman.config.logger = Logger.new(File.join(SPEC_ROOT, 'mailman-log.log'))
+    ContactabilityMailman.config.logger = Logger.new(File.join(SPEC_ROOT, 'contactability-mailman-log.log'))
   end
   config.after do
-    FileUtils.rm File.join(SPEC_ROOT, 'mailman-log.log') rescue nil
+    FileUtils.rm File.join(SPEC_ROOT, 'contactability-mailman-log.log') rescue nil
   end
 end
 

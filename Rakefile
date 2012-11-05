@@ -8,7 +8,7 @@ require 'rubygems/package_task'
 
 def gemspec
   @gemspec ||= begin
-    file = File.expand_path('../mailman.gemspec', __FILE__)
+    file = File.expand_path('../contactability_mailman.gemspec', __FILE__)
     eval(File.read(file), binding, file)
   end
 end

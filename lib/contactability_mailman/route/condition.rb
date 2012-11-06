@@ -51,4 +51,4 @@ module ContactabilityMailman
   end
 end
 
-require 'mailman/route/conditions'
+require 'contactability_mailman/route/conditions'

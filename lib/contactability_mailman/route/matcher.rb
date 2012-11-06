@@ -61,5 +61,5 @@ module ContactabilityMailman
   end
 end
 
-require 'mailman/route/regexp_matcher'
-require 'mailman/route/string_matcher'
+require 'contactability_mailman/route/regexp_matcher'
+require 'contactability_mailman/route/string_matcher'

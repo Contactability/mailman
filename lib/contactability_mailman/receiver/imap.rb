@@ -46,13 +46,17 @@ module ContactabilityMailman
       # Iterates through new messages, passing them to the processor, and
       # deleting them.
       def get_messages
-        @connection.search(@filter).each do  |message|
+        @connection.search(@filter).each do |message|
           body = @connection.fetch(message,"RFC822")[0].attr["RFC822"]
           @processor.process(body)
+
           @connection.store(message,"+FLAGS",[:Answered])
+          @connection.copy(message, "INBOX.processed")
+          @connection.store(message, "+FLAGS", [:Deleted])
+
         end
         # Clears messages that have the Deleted flag set
-        # @connection.expunge
+        @connection.expunge
       end
 
     end

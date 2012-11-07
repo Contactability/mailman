@@ -8,7 +8,7 @@ require 'contactability_mailman/version'
 
 Gem::Specification.new do |s|
   s.name        = 'contactability_mailman'
-  s.version     = ContactabilityMailman::VERSION
+  s.version     = '0.5.3'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Jonathan Rudenberg']
   s.email       = ['jonathan@titanous.com']

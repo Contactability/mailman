@@ -51,7 +51,7 @@ module ContactabilityMailman
           @processor.process(body)
 
           @connection.store(message,"+FLAGS",[:Answered])
-          @connection.copy(message, "INBOX.processed")
+          @connection.copy(message, "INBOX.processed2013")
           @connection.store(message, "+FLAGS", [:Deleted])
 
         end
